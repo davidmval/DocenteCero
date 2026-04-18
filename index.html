@@ -5,135 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TERMINAL - PROYECTO CÓDIGO FUENTE</title>
     <style>
-        :root {
-            --green: #00FF41;
-            --dark-green: #003B00;
-            --bg: #0d0208;
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--green);
-            font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            height: 100vh;
-            margin: 0;
-            padding: 20px;
-            overflow-x: hidden;
-            text-shadow: 0 0 5px var(--green);
-        }
-
-        /* Efecto CRT Scanline */
-        body::before {
-            content: " ";
-            display: block;
-            position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 2;
-            background-size: 100% 2px, 3px 100%;
-            pointer-events: none;
-        }
-
-        #terminal {
-            width: 100%;
-            max-width: 800px;
-            border: 2px solid var(--green);
-            padding: 20px;
-            box-shadow: 0 0 15px var(--dark-green);
-            background: rgba(0, 20, 0, 0.9);
-            z-index: 1;
-        }
-
+        :root { --green: #00FF41; --dark-green: #003B00; --bg: #0d0208; }
+        body { background-color: var(--bg); color: var(--green); font-family: 'Courier New', monospace; display: flex; flex-direction: column; align-items: center; padding: 20px; text-shadow: 0 0 5px var(--green); }
+        body::before { content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); z-index: 2; background-size: 100% 2px, 3px 100%; pointer-events: none; }
+        #terminal { width: 100%; max-width: 800px; border: 2px solid var(--green); padding: 20px; background: rgba(0, 20, 0, 0.9); z-index: 1; min-height: 400px; }
         .hidden { display: none; }
-
-        input {
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid var(--green);
-            color: var(--green);
-            font-family: inherit;
-            font-size: 1.1em;
-            outline: none;
-            width: 200px;
-            margin-top: 10px;
-        }
-
-        button {
-            background: var(--dark-green);
-            color: var(--green);
-            border: 1px solid var(--green);
-            padding: 5px 15px;
-            cursor: pointer;
-            font-family: inherit;
-            margin-left: 10px;
-            transition: all 0.3s;
-        }
-
-        button:hover {
-            background: var(--green);
-            color: var(--bg);
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 20px;
-            background: var(--green);
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--green);
-            margin-bottom: 20px;
-            font-size: 0.8em;
-        }
-
-        .clue-box {
-            border: 1px dashed var(--green);
-            padding: 15px;
-            margin-top: 20px;
-            background: rgba(0, 255, 0, 0.05);
-        }
-
-        .quiz-option {
-            margin: 10px 0;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .quiz-option:hover {
-            background: var(--dark-green);
-        }
+        input { background: transparent; border: none; border-bottom: 1px solid var(--green); color: var(--green); font-family: inherit; font-size: 1.1em; outline: none; width: 180px; margin: 10px 0; }
+        button { background: var(--dark-green); color: var(--green); border: 1px solid var(--green); padding: 8px 15px; cursor: pointer; font-family: inherit; margin: 5px; transition: all 0.3s; }
+        button:hover { background: var(--green); color: var(--bg); font-weight: bold; }
+        .status-bar { display: flex; justify-content: space-between; border-bottom: 1px solid var(--green); margin-bottom: 20px; font-size: 0.8em; }
+        .clue-box { border: 1px dashed var(--green); padding: 15px; margin: 20px 0; background: rgba(0, 255, 0, 0.05); }
+        .quiz-option { margin: 10px 0; cursor: pointer; padding: 10px; border: 1px solid transparent; }
+        .quiz-option:hover { border: 1px solid var(--green); background: var(--dark-green); }
+        .alert { color: #ffeb3b; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div id="terminal">
     <div class="status-bar">
-        <span>SISTEMA: CÓDIGO FUENTE v1.0</span>
-        <span>AUDITOR: DOCENTE_FP_2026</span>
+        <span>SISTEMA: CÓDIGO FUENTE v2.0</span>
+        <span>MODO: RECUPERACIÓN DE DATOS</span>
     </div>
 
-    <div id="intro">
-        <p>> INICIANDO SECUENCIA DE RECUPERACIÓN...</p>
-        <p>> PROPIEDAD DEL "DOCENTE CERO" (Área de Electrónica, Jubilado).</p>
-        <p>> MENSAJE ENCONTRADO: "Mis mejores herramientas no se heredan, se conquistan. Si estás aquí, demuestra que sabes dominar a la máquina."</p>
-        <hr>
-        <p>INTRODUZCA CÓDIGO DE SESIÓN (Oculto en Diapositivas):</p>
-        <input type="text" id="sessionCode" placeholder="____-____">
-        <button onclick="checkSession()">ACCEDER</button>
+    <div id="sessionSelect">
+        <p>> INICIANDO INTERFAZ DE RECUPERACIÓN...</p>
+        <p>> Localizando rastros del "Docente Cero"... Archivos fragmentados encontrados.</p>
+        <p>> Seleccione el sector que desea restaurar:</p>
+        <button onclick="showCodeInput(1)">[ SECTOR 01: EL QUÉ ]</button>
+        <button onclick="showCodeInput(2)">[ SECTOR 02: EL CÓMO ]</button>
+        <button onclick="showCodeInput(3)">[ SECTOR 03: EL NÚCLEO ]</button>
+    </div>
+
+    <div id="codeInputSection" class="hidden">
+        <p>> SECTOR <span id="selectedSectorDisplay"></span> SELECCIONADO.</p>
+        <p>> Introduzca la CLAVE DE ACCESO (oculta en las diapositivas):</p>
+        <input type="text" id="sessionCode" placeholder="CLAVE_XXXX">
+        <br>
+        <button onclick="checkSession()">AUTENTICAR</button>
+        <button onclick="resetTerminal()">VOLVER</button>
     </div>
 
     <div id="quizSection" class="hidden">
@@ -142,99 +52,105 @@
     </div>
 
     <div id="rewardSection" class="hidden">
-        <p>> ACCESO CONCEDIDO AL MÓDULO <span id="moduleName"></span>.</p>
+        <p>> ACCESO CONCEDIDO. SINCRONIZANDO FRAGMENTO...</p>
         <div class="clue-box">
-            <p><strong>RECOMPENSA DE FRAGMENTO:</strong></p>
             <p id="clueText"></p>
         </div>
-        <p id="finalMessage" class="hidden">> TODOS LOS FRAGMENTOS REUNIDOS. PREPARANDO CONEXIÓN CON EL NÚCLEO...</p>
-        <button id="gemLink" class="hidden" onclick="window.open('URL_DE_TU_GEM_MAESTRA', '_blank')">CONECTAR CON "EL ARCHIVO"</button>
+        <p class="alert">> AVISO: Guarde este fragmento en un lugar seguro (apúntelo). Lo necesitará para el reto final.</p>
+        <p id="waitMessage">> CIERRE ESTA TERMINAL Y ESPERE A LA SIGUIENTE SESIÓN PARA CONTINUAR.</p>
+        
+        <div id="finalAction" class="hidden">
+            <hr>
+            <p>> DETECTADO NIVEL DE ACCESO TOTAL. NÚCLEO DISPONIBLE.</p>
+            <button onclick="window.open('URL_DE_TU_GEM_MAESTRA', '_blank')">CONECTAR CON "EL ARCHIVO"</button>
+        </div>
+        <br>
+        <button onclick="resetTerminal()">FINALIZAR CONEXIÓN</button>
     </div>
 
-    <p id="errorMsg" style="color: red;" class="hidden">> ERROR: CÓDIGO INVÁLIDO O RESPUESTA INCORRECTA.</p>
+    <div id="errorScreen" class="hidden">
+        <p style="color: #ff3d00;">> !! ERROR CRÍTICO: ACCESO DENEGADO !!</p>
+        <p>> Motivo: Clave incorrecta o respuesta no válida.</p>
+        <p>> El sistema ha bloqueado el intento. Reintente con credenciales válidas.</p>
+        <button onclick="resetTerminal()">REINTENTAR ACCESO</button>
+    </div>
 </div>
 
 <script>
-    // Configuración de la lógica
+    let currentSector = 0;
+
     const data = {
-        "ALFA77": { // Código Sesión 1
-            session: 1,
-            question: "¿Qué tipo de chatbot sería más útil para resolver dudas sobre el anexo de la FCT?",
-            options: ["Simulador de Situaciones", "FAQ / Consultas", "Tutor de Práctica"],
-            correct: 1,
-            clue: "FRAGMENTO 01: 'PROTOCOLOS' - El Guardián solo acepta términos estandarizados."
-        },
-        "BETA22a": { // Código Sesión 2
-            session: 2,
-            question: "Si queremos que el bot sea amable pero directo, ¿qué debemos configurar?",
-            options: ["El Corpus", "Los Límites", "El Tono"],
-            correct: 2,
-            clue: "FRAGMENTO 02: 'SOCRÁTICO' - El Guardián responde mejor a las preguntas que a las órdenes."
-        },
-        "GAMMA99ff": { // Código Sesión 3
-            session: 3,
-            question: "¿Qué es lo más importante antes de lanzar el bot a los alumnos?",
-            options: ["Definir el Plan B (Contingencia)", "Ponerle un nombre divertido", "Que tenga muchos colores"],
-            correct: 0,
-            clue: "FRAGMENTO 03: 'AUTONOMÍA' - El objetivo final es el empoderamiento del alumno."
-        }
+        1: { code: "ALFA77", q: "¿Qué chatbot priorizarías para automatizar la burocracia de las FCT?", opts: ["Un simulador de cocina", "Un bot de FAQ de normativa", "Un tutor motivador"], correct: 1, clue: "FRAGMENTO 01: [PROTOCOLOS]. Sin orden en los datos, la IA es solo ruido." },
+        2: { code: "BETA22", q: "Para que el chatbot no 'alucine', es vital definir bien...", opts: ["Los límites y el corpus", "El color del avatar", "La velocidad de escritura"], correct: 0, clue: "FRAGMENTO 02: [SOCRÁTICO]. La duda es el principio de la sabiduría artificial." },
+        3: { code: "GAMMA99", q: "¿Cuál es el fin último de un chatbot en FP?", opts: ["Sustituir al profesor", "Que el alumno no pregunte", "Fomentar la autonomía del alumnado"], correct: 2, clue: "FRAGMENTO 03: [AUTONOMÍA]. El código está completo. El maestro se retira." }
     };
 
+    function showCodeInput(sector) {
+        currentSector = sector;
+        document.getElementById('sessionSelect').classList.add('hidden');
+        document.getElementById('codeInputSection').classList.remove('hidden');
+        document.getElementById('selectedSectorDisplay').innerText = "0" + sector;
+    }
+
     function checkSession() {
-        const code = document.getElementById('sessionCode').value.trim().toUpperCase();
-        const errorMsg = document.getElementById('errorMsg');
-        
-        if (data[code]) {
-            errorMsg.classList.add('hidden');
-            loadQuiz(code);
+        const inputCode = document.getElementById('sessionCode').value.trim().toUpperCase();
+        if (inputCode === data[currentSector].code) {
+            loadQuiz();
         } else {
-            errorMsg.classList.remove('hidden');
+            showError();
         }
     }
 
-    function loadQuiz(code) {
-        document.getElementById('intro').classList.add('hidden');
+    function loadQuiz() {
+        document.getElementById('codeInputSection').classList.add('hidden');
         const quizSection = document.getElementById('quizSection');
-        const qData = data[code];
+        const qData = data[currentSector];
         
         quizSection.classList.remove('hidden');
-        document.getElementById('quizQuestion').innerText = "> PREGUNTA DE SEGURIDAD: " + qData.question;
+        document.getElementById('quizQuestion').innerText = "> VALIDACIÓN DE SEGURIDAD: " + qData.q;
         
         const optionsDiv = document.getElementById('quizOptions');
         optionsDiv.innerHTML = "";
-        
-        qData.options.forEach((opt, index) => {
+        qData.opts.forEach((opt, index) => {
             const btn = document.createElement('div');
             btn.className = "quiz-option";
-            btn.innerText = (index + 1) + ". " + opt;
-            btn.onclick = () => checkAnswer(index, code);
+            btn.innerText = "> " + opt;
+            btn.onclick = () => {
+                if(index === qData.correct) showReward();
+                else showError();
+            };
             optionsDiv.appendChild(btn);
         });
     }
 
-    function checkAnswer(selected, code) {
-        const qData = data[code];
-        if (selected === qData.correct) {
-            showReward(qData);
+    function showReward() {
+        document.getElementById('quizSection').classList.add('hidden');
+        const rewardSection = document.getElementById('rewardSection');
+        rewardSection.classList.remove('hidden');
+        document.getElementById('clueText').innerText = data[currentSector].clue;
+
+        if(currentSector === 3) {
+            document.getElementById('finalAction').classList.remove('hidden');
+            document.getElementById('waitMessage').classList.add('hidden');
         } else {
-            document.getElementById('errorMsg').classList.remove('hidden');
+            document.getElementById('finalAction').classList.add('hidden');
+            document.getElementById('waitMessage').classList.remove('hidden');
         }
     }
 
-    function showReward(qData) {
+    function showError() {
+        document.getElementById('codeInputSection').classList.add('hidden');
         document.getElementById('quizSection').classList.add('hidden');
-        document.getElementById('errorMsg').classList.add('hidden');
-        const rewardSection = document.getElementById('rewardSection');
-        
-        rewardSection.classList.remove('hidden');
-        document.getElementById('moduleName').innerText = qData.session;
-        document.getElementById('clueText').innerText = qData.clue;
+        document.getElementById('errorScreen').classList.remove('hidden');
+    }
 
-        // Si es la sesión 3, mostrar botón final
-        if(qData.session === 3) {
-            document.getElementById('finalMessage').classList.remove('hidden');
-            document.getElementById('gemLink').classList.remove('hidden');
-        }
+    function resetTerminal() {
+        document.getElementById('sessionSelect').classList.remove('hidden');
+        document.getElementById('codeInputSection').classList.add('hidden');
+        document.getElementById('quizSection').classList.add('hidden');
+        document.getElementById('rewardSection').classList.add('hidden');
+        document.getElementById('errorScreen').classList.add('hidden');
+        document.getElementById('sessionCode').value = "";
     }
 </script>
 
