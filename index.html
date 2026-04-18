@@ -18,16 +18,16 @@
         .quiz-option { margin: 12px 0; cursor: pointer; padding: 12px; border: 1px solid transparent; transition: 0.2s; }
         .quiz-option:hover { border: 1px solid var(--green); background: var(--dark-green); }
         .alert { color: #ffeb3b; font-weight: bold; }
-        .narrative-text { line-height: 1.5; white-space: pre-wrap; margin-bottom: 20px; }
-        .highlight { color: #fff; text-shadow: 0 0 8px #fff; }
+        .narrative-text { line-height: 1.6; white-space: pre-wrap; margin-bottom: 20px; font-size: 1.05em;}
+        .highlight { color: #fff; text-shadow: 0 0 8px #fff; font-weight: bold;}
     </style>
 </head>
 <body>
 
 <div id="terminal">
     <div class="status-bar">
-        <span>SISTEMA: CÓDIGO FUENTE v3.0</span>
-        <span>STATUS: OPERACIÓN_HACKER_DOCENTE</span>
+        <span>SISTEMA: CÓDIGO FUENTE v3.1</span>
+        <span>STATUS: OPERACIÓN_RECUPERACIÓN</span>
     </div>
 
     <div id="narrativeSection">
@@ -51,7 +51,7 @@ Sin embargo, para protegerla de un uso indebido, bloqueó el acceso con una capa
 
     <div id="codeInputSection" class="hidden">
         <p>> SECTOR 0<span id="selectedSectorDisplay"></span> SELECCIONADO.</p>
-        <p>> Introduzca la CLAVE DE ACCESO (de tus diapositivas):</p>
+        <p>> Introduzca la CLAVE DE ACCESO (oculta en las diapositivas):</p>
         <input type="text" id="sessionCode" placeholder="CLAVE_XXXX" onkeydown="if(event.key==='Enter') checkSession()">
         <br>
         <button onclick="checkSession()">AUTENTICAR</button>
@@ -68,12 +68,12 @@ Sin embargo, para protegerla de un uso indebido, bloqueó el acceso con una capa
         <div class="clue-box">
             <p id="clueText"></p>
         </div>
-        <p class="alert">> IMPORTANTE: Anota este fragmento. "EL ARCHIVO" te lo pedirá.</p>
+        <p class="alert">> IMPORTANTE: Anota este fragmento. El Guardián te lo pedirá.</p>
         <p id="waitMessage">> CIERRA LA TERMINAL. NOS VEMOS EN LA PRÓXIMA SESIÓN.</p>
         
         <div id="finalAction" class="hidden">
             <hr>
-            <p>> ATENCIÓN: Nivel de acceso TOTAL. El legado del Docente Cero está a un paso.</p>
+            <p>> ATENCIÓN: Nivel de acceso TOTAL. El legado del Docente Cero está disponible.</p>
             <button onclick="window.open('https://gemini.google.com/gem/1xEk-HAawseEBZo5y9rseWO8Y975l_VCG?usp=sharing', '_blank')">CONECTAR CON "EL ARCHIVO"</button>
         </div>
         <br>
@@ -89,6 +89,10 @@ Sin embargo, para protegerla de un uso indebido, bloqueó el acceso con una capa
 </div>
 
 <script>
+    // ESTE ES EL REGALO EXTRA PARA LOS QUE MIRAN LA CONSOLA (F12)
+    console.log("%c HUEVO DE PASCUA DETECTADO ", "background: #003B00; color: #00FF41; font-size: 20px; font-weight: bold;");
+    console.log("El Docente Cero premia tu curiosidad. Enlace directo: https://gemini.google.com/gem/1xEk-HAawseEBZo5y9rseWO8Y975l_VCG?usp=sharing");
+
     let currentSector = 0;
     let currentQuestionIndex = 0;
 
@@ -99,25 +103,25 @@ Sin embargo, para protegerla de un uso indebido, bloqueó el acceso con una capa
                 { q: "¿Qué limpiar en un PDF antes de usarlo (GIGO)?", opts: ["El título", "Índices, bibliografía y páginas vacías", "Las fotos del autor"], correct: 1 },
                 { q: "¿Qué bot simula clientes para practicar?", opts: ["FAQ", "Tutor", "Simulador de situaciones"], correct: 2 }
             ],
-            clue: "FRAGMENTO 01: [PROTOCOLOS]. La base de todo éxito es el orden.",
-            failMsg: "¡Por los cables de un modem! Esa respuesta no sirve. ¡Estudia las diapositivas!"
+            clue: "FRAGMENTO 01: [PROTOCOLOS]. Sin orden no hay inteligencia.",
+            failMsg: "¡Por los cables de un modem! Esa respuesta no sirve. ¡Revisa el material!"
         },
         2: { code: "BETA22", 
             questions: [
                 { q: "¿Qué logramos con el 'Few-shot prompting'?", opts: ["Velocidad", "Dar ejemplos de respuesta", "Ahorrar batería"], correct: 1 },
-                { q: "¿Qué hacer si piden datos privados al bot?", opts: ["Darlos", "Negarse por ética/RGPD", "Inventarlos"], correct: 1 },
-                { q: "¿Para qué sirven los 'Escenarios Límite'?", opts: ["Para cuando el usuario intenta 'romper' el bot", "Para que el bot cante", "Para que sea más lento"], correct: 0 }
+                { q: "¿Qué hacer si piden datos privados al bot?", opts: ["Darlos", "Negarse por ética y RGPD", "Inventarlos"], correct: 1 },
+                { q: "¿Para qué sirven los 'Escenarios Límite'?", opts: ["Para cuando intentan 'romper' el bot", "Para que el bot cante", "Para que sea más lento"], correct: 0 }
             ],
-            clue: "FRAGMENTO 02: [SOCRÁTICO]. No des respuestas, haz que piensen.",
-            failMsg: "Vaya... tienes más errores que un Windows 95. ¡Lee bien el material!"
+            clue: "FRAGMENTO 02: [SOCRÁTICO]. La duda es el motor del aprendizaje.",
+            failMsg: "Tienes más errores que un Windows 95 sin actualizar. ¡Vuelve a leer!"
         },
         3: { code: "GAMMA99", 
             questions: [
                 { q: "¿Qué implica el 'Andamiaje'?", opts: ["Dar la respuesta", "Dar pistas para que el alumno llegue solo", "Hacer el trabajo"], correct: 1 },
-                { q: "¿Métrica cualitativa más valiosa en FP?", opts: ["Longitud de respuesta", "Autonomía del alumno en el taller", "Color del bot"], correct: 1 },
+                { q: "¿Métrica cualitativa más valiosa en FP?", opts: ["Longitud de respuesta", "Autonomía del alumno en el taller", "Nombre del bot"], correct: 1 },
                 { q: "¿Qué necesita tu plan si falla el Wi-Fi?", opts: ["Plan de contingencia (Plan B)", "Cerrar el centro", "Un milagro"], correct: 0 }
             ],
-            clue: "FRAGMENTO 03: [AUTONOMÍA]. El alumno es el centro, la IA es el puente.",
+            clue: "FRAGMENTO 03: [AUTONOMÍA]. El docente guía, la IA acompaña.",
             failMsg: "¡ERROR! Tu pedagogía está descalibrada. ¡Revisa el plan de aula!"
         }
     };
@@ -140,7 +144,7 @@ Sin embargo, para protegerla de un uso indebido, bloqueó el acceso con una capa
     function checkSession() {
         const inputCode = document.getElementById('sessionCode').value.trim().toUpperCase();
         if (inputCode === data[currentSector].code) loadQuiz();
-        else showError("CÓDIGO INVÁLIDO. Revisa las diapositivas.");
+        else showError("CÓDIGO INVÁLIDO. Mira bien las diapositivas.");
     }
 
     function loadQuiz() {
